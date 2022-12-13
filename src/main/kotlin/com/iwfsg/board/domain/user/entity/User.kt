@@ -1,4 +1,10 @@
 package com.iwfsg.board.domain.user.entity
 
-class User {
-}
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
+class User (
+    @Id
+    val idx: Long,
+)
