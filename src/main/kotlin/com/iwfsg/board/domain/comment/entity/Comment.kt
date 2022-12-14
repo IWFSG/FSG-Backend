@@ -13,7 +13,7 @@ class Comment (
     val idx: Long,
     @Column(nullable = false)
     val content: String,
-    val createAT: ZonedDateTime,
+    val createdAT: ZonedDateTime,
     @ManyToOne(fetch = FetchType.LAZY)
     val user: User,
     @ManyToOne(fetch = FetchType.LAZY)
