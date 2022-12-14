@@ -2,6 +2,7 @@ package com.iwfsg.board.domain.comment.entity
 
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.user.entity.User
+import com.iwfsg.board.global.common.entity.baseTimeEntity
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 import java.time.ZonedDateTime
@@ -13,10 +14,10 @@ class Comment (
     val idx: Long,
     @Column(nullable = false)
     val content: String,
-    val createdAT: ZonedDateTime,
     @ManyToOne(fetch = FetchType.LAZY)
     val user: User,
     @ManyToOne(fetch = FetchType.LAZY)
     val post: Post
+):baseTimeEntity(){
 
-)
+}
