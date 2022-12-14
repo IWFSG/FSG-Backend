@@ -10,8 +10,11 @@ import javax.persistence.*
 class Like (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val idx: Long,
+    @OnDelete(action =  OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     val user: User,
+    @JoinColumn(name = "post_id")
     @OnDelete(action =  OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     val post: Post
