@@ -1,10 +1,14 @@
 package com.iwfsg.board.domain.user.entity
 
-import javax.persistence.Entity
-import javax.persistence.Id
+import com.iwfsg.board.global.common.entity.baseIdEntity
+import javax.persistence.*
 
 @Entity
 class User (
-    @Id
-    val idx: Long,
-)
+    @Column(nullable = false)
+    val id: String,
+    @Column(nullable = false)
+    val password: String,
+    @Column(nullable = false)
+    val name: String
+):baseIdEntity()

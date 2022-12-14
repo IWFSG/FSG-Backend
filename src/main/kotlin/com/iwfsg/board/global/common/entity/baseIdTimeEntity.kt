@@ -6,8 +6,7 @@ import javax.persistence.Id
 import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
-abstract class baseIdEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+abstract class baseIdTimeEntity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val idx: Long = 0
 }
