@@ -9,13 +9,13 @@ import javax.persistence.*
 
 @Entity
 class Like (
-    @OnDelete(action =  OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OnDelete(action =  OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_id", nullable = false)
     val user: User,
-    @JoinColumn(name = "post_id")
-    @OnDelete(action =  OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action =  OnDeleteAction.CASCADE)
+    @JoinColumn(name = "post_id", nullable = false)
     val post: Post
 ):baseIdEntity()
 
