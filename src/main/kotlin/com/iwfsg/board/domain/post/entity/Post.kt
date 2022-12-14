@@ -8,18 +8,13 @@ import javax.persistence.*
 class Post (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val idx: Long,
-
     @Column(nullable = false)
     val title: String,
-
     @Column(nullable = false)
     val content: String,
-
     @Column(nullable = false)
     val profile: String,
-
     val createdAT: ZonedDateTime,
-
     @ManyToOne(fetch = FetchType.LAZY)
     val user: User
 )

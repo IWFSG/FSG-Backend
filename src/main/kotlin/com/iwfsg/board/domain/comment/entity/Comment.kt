@@ -9,15 +9,11 @@ import javax.persistence.*
 class Comment (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val idx: Long,
-
     @Column(nullable = false)
     val content: String,
-
     val createAT: ZonedDateTime,
-
     @ManyToOne(fetch = FetchType.LAZY)
     val user: User,
-
     @ManyToOne(fetch = FetchType.LAZY)
     val post: Post
 

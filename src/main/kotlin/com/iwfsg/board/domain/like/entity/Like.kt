@@ -8,10 +8,8 @@ import javax.persistence.*
 class Like (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val idx: Long,
-
     @ManyToOne(fetch = FetchType.LAZY)
     val user: User,
-
     @ManyToOne(fetch = FetchType.LAZY)
     val post: Post
 
