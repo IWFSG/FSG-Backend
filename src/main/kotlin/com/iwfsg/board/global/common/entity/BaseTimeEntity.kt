@@ -8,7 +8,7 @@ import javax.persistence.PrePersist
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-abstract class baseTimeEntity {
+abstract class BaseTimeEntity {
     protected var createdAt: ZonedDateTime? = null
 
     @PrePersist
