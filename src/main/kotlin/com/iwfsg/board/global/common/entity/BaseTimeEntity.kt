@@ -9,11 +9,10 @@ import javax.persistence.PrePersist
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
 abstract class BaseTimeEntity {
-    protected var createdAt: ZonedDateTime? = null
+    var createdAt: ZonedDateTime? = null
 
     @PrePersist
     fun prePersist() {
         createdAt = ZonedDateTime.now()
     }
-
 }
