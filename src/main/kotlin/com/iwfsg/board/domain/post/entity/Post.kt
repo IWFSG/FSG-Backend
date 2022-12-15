@@ -13,7 +13,7 @@ class Post (
     @Column(nullable = false)
     val content: String,
     @Column(nullable = false)
-    val profile: String,
+    val thumbnail: String,
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action =  OnDeleteAction.CASCADE)
     val user: User
