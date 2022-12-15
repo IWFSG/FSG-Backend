@@ -17,4 +17,4 @@ class Post (
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action =  OnDeleteAction.CASCADE)
     val user: User
-): BaseIdTimeEntity()
+) : BaseIdTimeEntity()

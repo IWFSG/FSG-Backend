@@ -17,6 +17,6 @@ class Like (
     @OnDelete(action =  OnDeleteAction.CASCADE)
     @JoinColumn(name = "post_id", nullable = false)
     val post: Post
-):BaseIdEntity()
+) : BaseIdEntity()
 
 

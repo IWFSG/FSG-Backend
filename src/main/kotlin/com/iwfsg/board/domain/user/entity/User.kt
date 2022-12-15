@@ -11,4 +11,4 @@ class User (
     val password: String,
     @Column(nullable = false)
     val name: String
-):BaseIdEntity()
+) : BaseIdEntity()

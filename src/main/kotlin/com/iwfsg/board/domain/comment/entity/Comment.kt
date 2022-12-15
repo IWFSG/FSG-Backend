@@ -19,4 +19,4 @@ class Comment (
     @OnDelete(action =  OnDeleteAction.CASCADE)
     @JoinColumn(name = "post_id", nullable = false)
     val post: Post
-):BaseIdTimeEntity()
+) : BaseIdTimeEntity()
