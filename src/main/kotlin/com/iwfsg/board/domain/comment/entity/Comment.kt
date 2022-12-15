@@ -2,7 +2,7 @@ package com.iwfsg.board.domain.comment.entity
 
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.user.entity.User
-import com.iwfsg.board.global.common.entity.baseIdTimeEntity
+import com.iwfsg.board.global.common.entity.BaseIdTimeEntity
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
@@ -19,4 +19,4 @@ class Comment (
     @OnDelete(action =  OnDeleteAction.CASCADE)
     @JoinColumn(name = "post_id", nullable = false)
     val post: Post
-):baseIdTimeEntity()
+) : BaseIdTimeEntity()
