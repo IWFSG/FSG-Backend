@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
 
 @Entity
+@Table(name="likes")
 class Like (
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action =  OnDeleteAction.CASCADE)
