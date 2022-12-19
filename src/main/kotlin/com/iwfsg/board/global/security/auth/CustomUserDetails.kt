@@ -5,11 +5,9 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 
 
-class CustomUserDetails(private var user:User): UserDetails {
+class CustomUserDetails(private var user: User) : UserDetails {
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? {
-        return null
-    }
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? = null
 
     override fun getPassword(): String = user.password
 
