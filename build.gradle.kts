@@ -28,7 +28,13 @@ dependencies {
     // JUnit5
     testImplementation("org.junit.platform:junit-platform-launcher:1.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
-
+    //jwt
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    //security
+    implementation ("org.springframework.boot:spring-boot-starter-security")
+    implementation ("org.springframework.security:spring-security-test")
 }
 
 tasks.withType<KotlinCompile> {
