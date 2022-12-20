@@ -18,9 +18,5 @@ class SecurityConfig {
             .addFilterBefore()
             .addFilterBefore()
             .build()
-
-
-
-
     }
 }
