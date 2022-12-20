@@ -1,4 +1,9 @@
 package com.iwfsg.board.global.jwt
 
-class JwtTokenProvider {
+import org.springframework.stereotype.Component
+
+@Component
+class JwtTokenProvider(private val userd) {
+
+
 }
