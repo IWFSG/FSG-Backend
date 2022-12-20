@@ -1,4 +1,5 @@
 package com.iwfsg.board.global.error.error_code
 
-enum class ErrorCode {
+enum class ErrorCode(val message: String, val status: Int) {
+    INTERNET_SERVER_ERROR("InternetServerError",500)
 }
