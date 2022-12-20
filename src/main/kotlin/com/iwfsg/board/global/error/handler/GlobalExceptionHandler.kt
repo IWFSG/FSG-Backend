@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
-class ExceptionHandler {
+class GlobalExceptionHandler {
     @ExceptionHandler(BasicException::class)
     fun basicExceptionHandler(error: BasicException): ResponseEntity<ErrorResponse> {
         val errorCode: ErrorCode = error.errorCode
