@@ -25,6 +25,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("com.mysql:mysql-connector-j")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     // JUnit5
     testImplementation("org.junit.platform:junit-platform-launcher:1.9.0")
