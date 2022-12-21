@@ -1,15 +1,16 @@
 package com.iwfsg.board.global.jwt
 
 import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jwt
 import io.jsonwebtoken.Jwts
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction
+import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.security.Keys
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
-import java.util.Date
-import java.util.Locale
-import javax.persistence.Id
+import java.security.Key
+import java.util.*
+
 
 @Component
 class JwtTokenProvider(
@@ -28,11 +29,27 @@ class JwtTokenProvider(
         val claims: Claims = Jwts.claims().setSubject(userId)
         claims["userId"] = userId
         return Jwts.builder()
+            .signWith(getSigningKey(secret),SignatureAlgorithm.HS256)
             .setHeaderParam("typ", "JWT")
             .setClaims(claims)
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + exp * 1000))
             .compact()
     }
+    fun getUserPk(token: String) : String {
+        return Jwts.parserBuilder().setSigningKey(jwtProperties.accessSecret).build().parseClaimsJws(token).body.subject
 
+    }
+    fun getAuthentication(token: String?): Authentication {
+        val userDetails = userDetailsService.loadUserByUsername(())
+    }
+    fun generateAccessToken(userId: String): String =
+        createToken(userId, ACCESS_TYPE, jwtProperties.accessSecret, ACCESS_EXP)
+
+
+
+    private fun getSigningKey(secret: String): Key{
+        val byteArray = secret.toByteArray()
+        return Keys.hmacShaKeyFor(byteArray)
+    }
 }
