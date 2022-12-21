@@ -1,11 +1,10 @@
 package com.iwfsg.board.global.security.auth
 
 import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 
 
-class CustomUserDetails(private var user: User) : UserDetails {
+class CustomUserDetails(private var user: com.iwfsg.board.domain.user.entity.User) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority>? = null
 
