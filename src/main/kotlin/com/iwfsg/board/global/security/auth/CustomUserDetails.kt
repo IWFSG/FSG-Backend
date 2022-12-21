@@ -10,7 +10,7 @@ class CustomUserDetails(private var user: com.iwfsg.board.domain.user.entity.Use
 
     override fun getPassword(): String = user.password
 
-    override fun getUsername(): String = user.username
+    override fun getUsername(): String = user.name
 
     override fun isAccountNonExpired(): Boolean = true
 
