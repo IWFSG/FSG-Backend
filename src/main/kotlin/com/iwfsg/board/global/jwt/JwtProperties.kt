@@ -4,8 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
-@ConfigurationProperties(prefix = "jwt")
+@ConfigurationProperties ("jwt")
 class JwtProperties (
-    accessSecret: String,
-    refreshSecret: String
+    val accessSecret: String,
+    val refreshSecret: String
 )
