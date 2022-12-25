@@ -26,10 +26,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
     // JUnit5
     testImplementation("org.junit.platform:junit-platform-launcher:1.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    //test
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation ("org.mockito:mockito-inline:4.7.0")
 
 }
 
