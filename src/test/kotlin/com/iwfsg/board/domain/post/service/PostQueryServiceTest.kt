@@ -1,9 +1,8 @@
 package com.iwfsg.board.domain.post.service
 
-import com.iwfsg.board.domain.post.presentaion.data.dto.PostDto
 import org.junit.jupiter.api.Test
 
-class PostQueryService {
+class PostQueryServiceTest {
     @Test
     fun test_findAllPost(){
         //given
