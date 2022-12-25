@@ -12,5 +12,5 @@ class Category (
     val title: String,
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    val category: Category
+    val post: Post
 ): BaseIdEntity()
