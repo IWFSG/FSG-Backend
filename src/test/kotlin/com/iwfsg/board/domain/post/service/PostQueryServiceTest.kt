@@ -1,7 +1,6 @@
 package com.iwfsg.board.domain.post.service
 
 import com.iwfsg.board.domain.like.repository.LikeRepository
-import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
 import com.iwfsg.board.domain.post.repository.PostRepository
 import com.iwfsg.board.domain.post.repository.PostViewsRepository
