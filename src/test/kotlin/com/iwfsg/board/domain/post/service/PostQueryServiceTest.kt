@@ -1,5 +1,6 @@
 package com.iwfsg.board.domain.post.service
 
+import com.iwfsg.board.domain.like.repository.LikeRepository
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
 import com.iwfsg.board.domain.post.repository.PostRepository
@@ -21,6 +22,7 @@ import kotlin.random.Random
 class PostQueryServiceTest {
     private lateinit var postRepository: PostRepository
     private lateinit var postViewsRepository: PostViewsRepository
+    private lateinit var likeRepository: LikeRepository
     private lateinit var postQueryConverter: PostQueryConverter
     private lateinit var target: PostQueryService
 
@@ -29,7 +31,8 @@ class PostQueryServiceTest {
         postRepository = mock()
         postViewsRepository = mock()
         postQueryConverter = mock()
-        target = PostQueryServiceImpl(postRepository, postViewsRepository, postQueryConverter)
+        likeRepository = mock()
+        target = PostQueryServiceImpl(postRepository, postViewsRepository, likeRepository, postQueryConverter)
     }
     @Test
     fun test_findAllPost(){
@@ -44,7 +47,8 @@ class PostQueryServiceTest {
         //when
         whenever(postRepository.findBy(pagination)).thenReturn(data)
         whenever(postViewsRepository.findById(any())).thenReturn(Optional.empty())
-        whenever(postQueryConverter.toQueryDto(any(),any<Post>())).thenReturn(queryDto)
+        whenever(likeRepository.findById(any())).thenReturn(Optional.empty())
+        whenever(postQueryConverter.toQueryDto(any(),any(),any<Post>())).thenReturn(queryDto)
 
         //then
         val result = target.findAllPost(pagination)

@@ -1,5 +1,6 @@
 package com.iwfsg.board.domain.post.service.impl
 
+import com.iwfsg.board.domain.like.repository.LikeRepository
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
 import com.iwfsg.board.domain.post.repository.PostRepository
 import com.iwfsg.board.domain.post.repository.PostViewsRepository
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service
 class PostQueryServiceImpl(
     private val postRepository: PostRepository,
     private val postViewsRepository: PostViewsRepository,
+    private val likeRepository: LikeRepository,
     private val postQueryConverter: PostQueryConverter
 ): PostQueryService {
     override fun findAllPost(pagination: PageRequest): Page<PostQueryDto> =
