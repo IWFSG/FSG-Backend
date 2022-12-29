@@ -47,6 +47,6 @@ class PostQueryControllerTest {
         val result = target.findAllPostWithPagination(page,size)
         assert(result.statusCode.is2xxSuccessful)
         assert(result.hasBody())
-        assertEquals(result.body, pageableResponse)
+        assertEquals(result.body, pageableResponse  )
     }
 }
