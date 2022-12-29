@@ -1,21 +1,17 @@
 package com.iwfsg.board.global.jwt
 
+import com.iwfsg.board.global.security.exception.ExpiredTokenException
 import com.iwfsg.board.global.security.exception.InvalidTokenException
-import io.jsonwebtoken.ExpiredJwtException
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.MalformedJwtException
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication
-import org.hibernate.validator.internal.engine.messageinterpolation.parser.Token
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.security.SignatureException
 import java.time.ZonedDateTime
 import java.util.*
-import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 
 
@@ -55,16 +51,16 @@ class JwtTokenProvider(
     private fun getExpiredTime(): ZonedDateTime = ZonedDateTime.now().plusSeconds(ACCESS_EXP)
 
     fun getRefreshTokenExp():Long = REFRESH_EXP
-
     fun getAuthentication(token: String): Authentication {
         val userDetails = userDetailsService.loadUserByUsername(getTokenSubject(token, jwtProperties.accessSecret))
         return UsernamePasswordAuthenticationToken(userDetails,"",userDetails.authorities)
     }
+
     private fun getTokenSubject(token: String, secret: String): String {
         return getTokenBody(token, secret).get("userId", String::class.java)
     }
 
-    private fun getTokenBody(token: String, secret: String): Any {
+    private fun getTokenBody(token: String, secret: String): Claims {
         return try {
             Jwts.parserBuilder()
                 .setSigningKey(getSigningKey(secret))
@@ -72,7 +68,7 @@ class JwtTokenProvider(
                 .parseClaimsJws(token)
                 .body
         } catch (e: ExpiredJwtException) {
-            throw ExpiredJwtException()
+            throw ExpiredTokenException()
         } catch (e: MalformedJwtException) {
             throw InvalidTokenException()
         }catch (e: SignatureException) {
@@ -93,6 +89,5 @@ class JwtTokenProvider(
     }
 }
 
-private fun Any.get(s: String, java: Class<String>): String {
 
-}
+
