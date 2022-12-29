@@ -2,6 +2,7 @@ package com.iwfsg.board.global.jwt
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.security.Keys
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -30,6 +31,11 @@ class JwtTokenProvider(
             .setSubject(userId)
             .setExpiration(Date(System.currentTimeMillis() + exp * 1000))
             .compact()
+    }
+
+    private fun getSigningKey(secret: String): Key? {
+        val byteArray = secret.toByteArray()
+        return Keys.hmacShaKeyFor(byteArray)
     }
 
 }
