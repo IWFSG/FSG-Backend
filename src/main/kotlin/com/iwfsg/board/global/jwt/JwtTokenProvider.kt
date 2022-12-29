@@ -15,6 +15,8 @@ import java.security.Key
 import java.security.SignatureException
 import java.time.ZonedDateTime
 import java.util.*
+import javax.servlet.http.HttpServlet
+import javax.servlet.http.HttpServletRequest
 
 
 @Component
@@ -77,4 +79,13 @@ class JwtTokenProvider(
             throw InvalidTokenException()
         }
     }
+    private fun getSignKey(secret: String): Key{
+        val byteArray = secret.toByteArray()
+        return Keys.hmacShaKeyFor(byteArray)
+    }
+    private fun resolveToken(request: HttpServletRequest): String? {
+        val token = request.getHeader("Authorization")
+        return if (token != null && token.startsWith("Bearer ")) token.replace("Bearer ", "") else null
+    }
+
 }
