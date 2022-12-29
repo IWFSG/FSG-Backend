@@ -15,7 +15,10 @@ class PostQueryServiceImpl(
     private val postViewsRepository: PostViewsRepository,
     private val postQueryConverter: PostQueryConverter
 ): PostQueryService {
-    override fun findAllPost(pagination: PageRequest): Page<PostQueryDto> {
-        TODO("Not yet implemented")
-    }
+    override fun findAllPost(pagination: PageRequest): Page<PostQueryDto> =
+        postRepository.findBy(pagination)
+            .map { postViewsRepository.findById(it.idx) to it }
+            .map { (if(it.first.isEmpty) 0 else it.first.get().viewCount) to it.second }
+            .map { postQueryConverter.toQueryDto(it.first, it.second) }
+
 }

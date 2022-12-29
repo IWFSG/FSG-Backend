@@ -5,7 +5,6 @@ import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
 import com.iwfsg.board.domain.post.repository.PostRepository
 import com.iwfsg.board.domain.post.repository.PostViewsRepository
 import com.iwfsg.board.domain.post.service.impl.PostQueryServiceImpl
-import com.iwfsg.board.domain.post.utils.PostConverter
 import com.iwfsg.board.domain.post.utils.PostQueryConverter
 import com.iwfsg.board.domain.test_utils.TestUtil
 import org.junit.jupiter.api.BeforeEach
@@ -45,7 +44,7 @@ class PostQueryServiceTest {
         //when
         whenever(postRepository.findBy(pagination)).thenReturn(data)
         whenever(postViewsRepository.findById(any())).thenReturn(Optional.empty())
-        whenever(postQueryConverter.toQueryDto(any<Post>(),any())).thenReturn(queryDto)
+        whenever(postQueryConverter.toQueryDto(any(),any<Post>())).thenReturn(queryDto)
 
         //then
         val result = target.findAllPost(pagination)

@@ -7,5 +7,5 @@ import javax.persistence.Id
 class Views (
     @Id
     val postId: Long,
-    var vieWCount: Long
+    var viewCount: Long
 )
