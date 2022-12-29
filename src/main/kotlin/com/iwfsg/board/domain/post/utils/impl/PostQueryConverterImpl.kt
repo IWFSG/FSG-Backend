@@ -1,5 +1,6 @@
 package com.iwfsg.board.domain.post.utils.impl
 
+import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
 import com.iwfsg.board.domain.post.presentaion.data.response.PageablePostSummaryQueryResponse
 import com.iwfsg.board.domain.post.presentaion.data.response.PostQueryResponse
@@ -8,6 +9,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class PostQueryConverterImpl: PostQueryConverter {
+    override fun toQueryDto(entity: Post, views: Long): PostQueryDto {
+        TODO("Not yet implemented")
+    }
+
     override fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse {
         TODO("Not yet implemented")
     }
