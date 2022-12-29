@@ -22,6 +22,7 @@ class JwtTokenProvider(
         private const val ACCESS_EXP: Long = 60*15
         private const val REFRESH_EXP: Long = 60*60*24*7
     }
+    //token 생성
     private fun generateToken(userId: String, type: String, secret: String, exp: Long): String {
         return Jwts.builder()
             .signWith(getSigningKey(secret),SignatureAlgorithm.HS256)
@@ -32,10 +33,11 @@ class JwtTokenProvider(
             .setExpiration(Date(System.currentTimeMillis() + exp * 1000))
             .compact()
     }
-
+    //signkey생성
     private fun getSigningKey(secret: String): Key? {
         val byteArray = secret.toByteArray()
         return Keys.hmacShaKeyFor(byteArray)
     }
-
+    private fun generateAccessToken(userId: String): String =
+        generateToken(userId, ACCESS_TYPE, jwtProperties.accessSecret, ACCESS_EXP)
 }
