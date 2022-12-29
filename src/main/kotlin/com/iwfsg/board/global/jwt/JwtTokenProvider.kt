@@ -87,5 +87,12 @@ class JwtTokenProvider(
         val token = request.getHeader("Authorization")
         return if (token != null && token.startsWith("Bearer ")) token.replace("Bearer ", "") else null
     }
+    fun extractIdFromRefreshToken(token: String): String {
+        val refresh = token.replace("Bearer ","")
+        return getTokenSubject(refresh, jwtProperties.refreshSecret)
+    }
+}
+
+private fun Any.get(s: String, java: Class<String>): String {
 
 }
