@@ -42,13 +42,13 @@ class JwtTokenProvider(
         val byteArray = secret.toByteArray()
         return Keys.hmacShaKeyFor(byteArray)
     }
-    private fun generateAccessToken(userId: String): String =
+    fun generateAccessToken(userId: String): String =
         generateToken(userId, ACCESS_TYPE, jwtProperties.accessSecret, ACCESS_EXP)
 
-    private fun generateRefreshToken(userId: String): String =
+    fun generateRefreshToken(userId: String): String =
         generateToken(userId, REFRESH_TYPE, jwtProperties.refreshSecret, REFRESH_EXP)
 
-    private fun getExpiredTime(): ZonedDateTime = ZonedDateTime.now().plusSeconds(ACCESS_EXP)
+    fun getExpiredTime(): ZonedDateTime = ZonedDateTime.now().plusSeconds(ACCESS_EXP)
 
     fun getRefreshTokenExp():Long = REFRESH_EXP
     fun getAuthentication(token: String): Authentication {
@@ -79,7 +79,7 @@ class JwtTokenProvider(
         val byteArray = secret.toByteArray()
         return Keys.hmacShaKeyFor(byteArray)
     }
-    private fun resolveToken(request: HttpServletRequest): String? {
+    fun resolveToken(request: HttpServletRequest): String? {
         val token = request.getHeader("Authorization")
         return if (token != null && token.startsWith("Bearer ")) token.replace("Bearer ", "") else null
     }
