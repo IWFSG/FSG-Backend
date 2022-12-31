@@ -14,6 +14,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import java.util.*
 import kotlin.math.absoluteValue
 import kotlin.random.Random
@@ -39,13 +40,14 @@ class PostQueryServiceTest {
         val page = Random.nextInt().absoluteValue
         val size = (1..100).random()
         val pagination = PageRequest.of(page,size)
+        val sortingPagination = PageRequest.of(pagination.pageSize,pagination.pageNumber, Sort.by(Sort.Order.desc("createdAt")))
         val posts = (1..size).map{TestUtil.data().post().entity()}
         val likeCount = Random.nextLong().absoluteValue
         val data = PageImpl(posts)
         val queryDto = mock<PostQueryDto>()
 
         //when
-        whenever(postRepository.findByOrderByCreatedAt(pagination)).thenReturn(data)
+        whenever(postRepository.findBy(sortingPagination)).thenReturn(data)
         whenever(postViewsRepository.findById(any())).thenReturn(Optional.empty())
         whenever(likeRepository.countByPost(any())).thenReturn(likeCount)
         whenever(postQueryConverter.toQueryDto(any(), any(), any())).thenReturn(queryDto)

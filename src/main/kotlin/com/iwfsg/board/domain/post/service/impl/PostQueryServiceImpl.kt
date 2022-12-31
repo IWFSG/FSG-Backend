@@ -9,6 +9,7 @@ import com.iwfsg.board.domain.post.service.PostQueryService
 import com.iwfsg.board.domain.post.utils.PostQueryConverter
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -19,7 +20,7 @@ class PostQueryServiceImpl(
     private val postQueryConverter: PostQueryConverter
 ): PostQueryService {
     override fun findAllPost(pagination: PageRequest): Page<PostQueryDto> =
-        postRepository.findByOrderByCreatedAt(pagination)
+        postRepository.findBy(PageRequest.of(pagination.pageNumber,pagination.pageSize,Sort.by(Sort.Order.desc("createdAt"))))
             .map { findPostViewsByPostIdx(it.idx) to it }
             .map { postQueryConverter.toQueryDto(it.first,getLikeCount(it.second),it.second) }
 

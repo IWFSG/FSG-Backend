@@ -6,6 +6,6 @@ import javax.persistence.Id
 @RedisHash
 class Views (
     @Id
-    val postId: Long,
+    var postId: Long,
     var viewCount: Long
 )
