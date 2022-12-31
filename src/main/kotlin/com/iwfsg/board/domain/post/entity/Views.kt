@@ -1,7 +1,7 @@
 package com.iwfsg.board.domain.post.entity
 
+import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
-import javax.persistence.Id
 
 @RedisHash
 class Views (
