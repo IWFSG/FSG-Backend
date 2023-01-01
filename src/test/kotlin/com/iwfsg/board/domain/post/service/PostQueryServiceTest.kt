@@ -53,7 +53,7 @@ class PostQueryServiceTest {
         whenever(postQueryConverter.toQueryDto(any(), any(), any())).thenReturn(queryDto)
 
         //then
-        val result = target.findAllPost(pagination)
+        val result = target.findAllPost(sortingPagination)
         assert(result.content.stream().allMatch{ it==queryDto})
     }
 }
