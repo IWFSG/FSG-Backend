@@ -33,7 +33,9 @@ class PostQueryControllerTest {
         //given
         val page = Random.nextInt().absoluteValue
         val size = (1..100).random()
-        val pagination = PageRequest.of(page, size)
+        val sortBy = listOf("idx","createdAt").random()
+        val direction = listOf("DESC","ASC").random()
+        val pagination = PageRequest.of(page, size,Sort.by(sortBy,direction))
         val posts = (1..100).map{ TestUtil.data().post().queryDto()}
         val data = PageImpl(posts)
         val response = mock<PostQueryResponse>()
@@ -45,7 +47,7 @@ class PostQueryControllerTest {
         whenever(postQueryConverter.toPageableResponse(any())).thenReturn(pageableResponse)
 
         //then
-        val result = target.findAllPostWithPagination(page,size)
+        val result = target.findAllPostWithPagination(page,size,sortBy,direction)
         assert(result.statusCode.is2xxSuccessful)
         assert(result.hasBody())
         assertEquals(result.body, pageableResponse  )

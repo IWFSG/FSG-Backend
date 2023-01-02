@@ -40,8 +40,6 @@ class PostQueryServiceTest {
         val page = Random.nextInt().absoluteValue
         val size = (1..100).random()
         val pagination = PageRequest.of(page,size)
-        val sort = Sort.by(Sort.Order.desc("createdAt"))
-        val sortingPagination = PageRequest.of(page, size, sort)
         val posts = (1..size).map{TestUtil.data().post().entity()}
         val likeCount = Random.nextLong().absoluteValue
         val data = PageImpl(posts)
