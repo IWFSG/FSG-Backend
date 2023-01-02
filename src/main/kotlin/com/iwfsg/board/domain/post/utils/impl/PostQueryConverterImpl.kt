@@ -10,7 +10,12 @@ import org.springframework.stereotype.Component
 @Component
 class PostQueryConverterImpl: PostQueryConverter {
     override fun toQueryDto(views: Long, entity: Post, likeCount: Long): PostQueryDto = PostQueryDto(
-        entity.idx, entity.title, entity.content, entity.thumbnail, views,likeCount)
+        idx = entity.idx,
+        title = entity.title,
+        content = entity.content,
+        thumbnail = entity.thumbnail,
+        views = views,likeCount
+    )
 
     override fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse {
         TODO("Not yet implemented")
