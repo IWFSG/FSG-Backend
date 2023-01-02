@@ -9,8 +9,11 @@ import com.iwfsg.board.domain.test_utils.TestUtil
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
@@ -28,13 +31,13 @@ class PostQueryControllerTest {
         postQueryService = mock()
         target = PostQueryController(postQueryConverter,postQueryService)
     }
-    @Test @DisplayName("PostQueryController- 전체게시물 조회 성공테스트")
-    fun testFindAllPostWithPagination() {
+    @DisplayName("PostQueryController- 전체게시물 조회 성공테스트")
+    @ParameterizedTest
+    @CsvSource(value = ["idx,DESC", "idx,ASC", "createdAt,DESC", "createdAt, ASC"])
+    fun testFindAllPostWithPagination(sortBy: String, direction: String) {
         //given
         val page = Random.nextInt().absoluteValue
         val size = (1..100).random()
-        val sortBy = listOf("idx","createdAt").random()
-        val direction = listOf("DESC","ASC").random()
         val pagination = PageRequest.of(page, size,Sort.by(sortBy,direction))
         val posts = (1..100).map{ TestUtil.data().post().queryDto()}
         val data = PageImpl(posts)

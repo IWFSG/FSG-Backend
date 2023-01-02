@@ -9,6 +9,8 @@ import com.iwfsg.board.domain.post.utils.PostQueryConverter
 import com.iwfsg.board.domain.test_utils.TestUtil
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
@@ -34,12 +36,13 @@ class PostQueryServiceTest {
         likeRepository = mock()
         target = PostQueryServiceImpl(postRepository, postViewsRepository, likeRepository, postQueryConverter)
     }
-    @Test
-    fun test_findAllPost(){
+    @ParameterizedTest
+    @CsvSource(value = ["idx,DESC", "idx,ASC", "createdAt,DESC", "createdAt, ASC"])
+    fun test_findAllPost(sortBy: String, direction: String){
         //given
         val page = Random.nextInt().absoluteValue
         val size = (1..100).random()
-        val pagination = PageRequest.of(page,size)
+        val pagination = PageRequest.of(page, size,Sort.by(sortBy,direction))
         val posts = (1..size).map{TestUtil.data().post().entity()}
         val likeCount = Random.nextLong().absoluteValue
         val data = PageImpl(posts)
