@@ -7,7 +7,7 @@ import com.iwfsg.board.domain.post.presentaion.data.response.PostQueryResponse
 import org.springframework.data.domain.Page
 
 interface PostQueryConverter {
-    fun toQueryDto(views: Long, likeCount: Long, entity: Post): PostQueryDto
+    fun toQueryDto(views: Long, entity: Post, likeCount: Long): PostQueryDto
     fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse
     fun toPageableResponse(list: List<PostQueryResponse>): PageablePostSummaryQueryResponse
 }

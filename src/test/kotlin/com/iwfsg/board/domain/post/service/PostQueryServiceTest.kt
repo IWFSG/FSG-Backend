@@ -39,6 +39,7 @@ class PostQueryServiceTest {
         //given
         val page = Random.nextInt().absoluteValue
         val size = (1..100).random()
+        val pagination = PageRequest.of(page,size)
         val sortingPagination = PageRequest.of(page, size, Sort.by(Sort.Order.desc("createdAt")))
         val posts = (1..size).map{TestUtil.data().post().entity()}
         val likeCount = Random.nextLong().absoluteValue
@@ -52,7 +53,7 @@ class PostQueryServiceTest {
         whenever(postQueryConverter.toQueryDto(any(), any(), any())).thenReturn(queryDto)
 
         //then
-        val result = target.findAllPost(sortingPagination)
+        val result = target.findAllPost(pagination)
         assert(result.content.stream().allMatch{ it==queryDto})
     }
 }

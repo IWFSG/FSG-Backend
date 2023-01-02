@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class PostQueryConverterImpl: PostQueryConverter {
-    override fun toQueryDto(views: Long, likeCount: Long, entity: Post): PostQueryDto = PostQueryDto(
+    override fun toQueryDto(views: Long, entity: Post, likeCount: Long): PostQueryDto = PostQueryDto(
         entity.idx, entity.title, entity.content, entity.thumbnail, views,likeCount)
 
     override fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse {
