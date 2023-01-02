@@ -21,7 +21,7 @@ class PostQueryServiceImpl(
 ): PostQueryService {
     override fun findAllPost(pagination: PageRequest): Page<PostQueryDto> {
         val sort = Sort.by(Sort.Order.desc("createdAt"))
-        val pageable = pagination.run {PageRequest.of(pageSize,pageSize,sort) }
+        val pageable = PageRequest.of(pagination.pageNumber, pagination.pageSize, sort)
         val posts = postRepository.findBy(pageable)
         return posts.map {
             val likeCount = getLikeCount(it)
