@@ -9,7 +9,6 @@ import com.iwfsg.board.domain.post.service.PostQueryService
 import com.iwfsg.board.domain.post.utils.PostQueryConverter
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
