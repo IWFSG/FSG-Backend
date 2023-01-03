@@ -5,6 +5,7 @@ import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
 import com.iwfsg.board.domain.post.presentaion.data.response.PageablePostSummaryQueryResponse
 import com.iwfsg.board.domain.post.presentaion.data.response.PostQueryResponse
 import com.iwfsg.board.domain.post.utils.PostQueryConverter
+import org.springframework.data.domain.PageImpl
 import org.springframework.stereotype.Component
 
 @Component
@@ -26,7 +27,7 @@ class PostQueryConverterImpl: PostQueryConverter {
         likeCount = dto.likeCount
     )
 
-    override fun toPageableResponse(list: List<PostQueryResponse>): PageablePostSummaryQueryResponse {
-        TODO("Not yet implemented")
-    }
+    override fun toPageableResponse(list: List<PostQueryResponse>): PageablePostSummaryQueryResponse = PageablePostSummaryQueryResponse(
+        pageablePostList = PageImpl(list)
+    )
 }
