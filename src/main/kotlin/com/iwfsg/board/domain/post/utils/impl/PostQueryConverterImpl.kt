@@ -17,9 +17,14 @@ class PostQueryConverterImpl: PostQueryConverter {
         views = views,likeCount
     )
 
-    override fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse {
-        TODO("Not yet implemented")
-    }
+    override fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse = PostQueryResponse(
+        idx = dto.idx,
+        title = dto.title,
+        content = dto.content,
+        thumbnail = dto.thumbnail,
+        views = dto.views,
+        likeCount = dto.likeCount
+    )
 
     override fun toPageableResponse(list: List<PostQueryResponse>): PageablePostSummaryQueryResponse {
         TODO("Not yet implemented")
