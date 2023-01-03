@@ -4,7 +4,6 @@ import com.iwfsg.board.domain.post.presentaion.data.response.PageablePostSummary
 import com.iwfsg.board.domain.post.service.PostQueryService
 import com.iwfsg.board.domain.post.utils.PostQueryConverter
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,8 +19,8 @@ class PostQueryController(
 ){
     @GetMapping
     fun findAllPostWithPagination(
-        @RequestParam("page") page: Int,
-        @RequestParam("size") size: Int,
+        @RequestParam("page", defaultValue = "0") page: Int,
+        @RequestParam("size", defaultValue = "5") size: Int,
         @RequestParam("sort_by")sortBy: String,
         @RequestParam("direction")direction:String
     )
