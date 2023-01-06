@@ -1,7 +1,9 @@
 package com.iwfsg.board.domain.post.utils.impl
 
 import com.iwfsg.board.domain.post.entity.Post
+import com.iwfsg.board.domain.post.presentaion.data.dto.DetailPostQueryDto
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
+import com.iwfsg.board.domain.post.presentaion.data.response.DetailPostQueryResponse
 import com.iwfsg.board.domain.post.presentaion.data.response.PageablePostSummaryQueryResponse
 import com.iwfsg.board.domain.post.presentaion.data.response.PostQueryResponse
 import com.iwfsg.board.domain.post.utils.PostQueryConverter
@@ -30,4 +32,26 @@ class PostQueryConverterImpl: PostQueryConverter {
     override fun toPageableResponse(list: List<PostQueryResponse>): PageablePostSummaryQueryResponse = PageablePostSummaryQueryResponse(
         pageablePostList = PageImpl(list)
     )
+
+    override fun toQueryResponse(dto: DetailPostQueryDto): DetailPostQueryResponse = DetailPostQueryResponse(
+        idx = dto.idx,
+        authorName = dto.authorName,
+        title = dto.title,
+        content = dto.content,
+        thumbnail = dto.thumbnail,
+        category = dto.category,
+        views = dto.views,
+        likeCount = dto.likeCount,
+        isLiked = dto.isLiked,
+        isMine = dto.isMine,
+        createdAt = dto.createdAt,
+        commentList = toCommentListResponse(dto.CommentList)
+    )
+    private fun toCommentListResponse(dto: List<DetailPostQueryDto.Comment>): List<DetailPostQueryResponse.Comment> =
+        dto.map { DetailPostQueryResponse.Comment(
+            idx = it.idx,
+            name = it.name,
+            content = it.content,
+            isMine = it.isMine
+        )}
 }

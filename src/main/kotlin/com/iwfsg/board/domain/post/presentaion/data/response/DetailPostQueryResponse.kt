@@ -14,7 +14,7 @@ data class DetailPostQueryResponse (
     val isLiked: Boolean,
     val isMine: Boolean,
     val createdAt: ZonedDateTime,
-    val CommentList: List<Comment>
+    val commentList: List<Comment>
 ){
     data class Comment(
         val idx: Long,

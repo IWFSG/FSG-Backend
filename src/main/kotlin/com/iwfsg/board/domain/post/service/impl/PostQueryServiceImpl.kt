@@ -2,6 +2,7 @@ package com.iwfsg.board.domain.post.service.impl
 
 import com.iwfsg.board.domain.like.repository.LikeRepository
 import com.iwfsg.board.domain.post.entity.Post
+import com.iwfsg.board.domain.post.presentaion.data.dto.DetailPostQueryDto
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
 import com.iwfsg.board.domain.post.repository.PostRepository
 import com.iwfsg.board.domain.post.repository.PostViewsRepository
@@ -25,6 +26,10 @@ class PostQueryServiceImpl(
             val views = findPostViewsByPostIdx(it.idx)
             return@map postQueryConverter.toQueryDto(views,it,likeCount)
         }
+    }
+
+    override fun findPostByIdx(idx: Long): DetailPostQueryDto {
+        TODO("Not yet implemented")
     }
 
     private fun findPostViewsByPostIdx(idx: Long): Long =

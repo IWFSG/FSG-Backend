@@ -11,6 +11,7 @@ import com.iwfsg.board.domain.test_utils.TestUtil
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.kotlin.any
@@ -58,6 +59,7 @@ class PostQueryControllerTest {
         assertEquals(result.body, pageableResponse)
     }
     @DisplayName("PostQueryController-상세피이지 조회 성공테스트")
+    @Test
     fun testFindPostByIdx(){
         //given
         val postIdx = Random.nextLong()
