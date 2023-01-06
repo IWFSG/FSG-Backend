@@ -1,6 +1,8 @@
 package com.iwfsg.board.domain.post.controller
 
 import com.iwfsg.board.domain.post.presentaion.PostQueryController
+import com.iwfsg.board.domain.post.presentaion.data.dto.DetailPostQueryDto
+import com.iwfsg.board.domain.post.presentaion.data.response.DetailPostQueryResponse
 import com.iwfsg.board.domain.post.presentaion.data.response.PageablePostSummaryQueryResponse
 import com.iwfsg.board.domain.post.presentaion.data.response.PostQueryResponse
 import com.iwfsg.board.domain.post.service.PostQueryService
@@ -31,7 +33,7 @@ class PostQueryControllerTest {
         postQueryService = mock()
         target = PostQueryController(postQueryConverter,postQueryService)
     }
-    @DisplayName("PostQueryController- 전체게시물 조회 성공테스트")
+    @DisplayName("PostQueryController-전체게시물 조회 성공테스트")
     @ParameterizedTest
     @CsvSource(value = ["idx,DESC", "idx,ASC", "createdAt,DESC", "createdAt, ASC"])
     fun testFindAllPostWithPagination(sortBy: String, direction: String) {
@@ -53,6 +55,23 @@ class PostQueryControllerTest {
         val result = target.findAllPostWithPagination(page,size,sortBy,direction)
         assert(result.statusCode.is2xxSuccessful)
         assert(result.hasBody())
-        assertEquals(result.body, pageableResponse  )
+        assertEquals(result.body, pageableResponse)
+    }
+    @DisplayName("PostQueryController-상세피이지 조회 성공테스트")
+    fun testFindPostByIdx(){
+        //given
+        val postIdx = Random.nextLong()
+        val dto = mock<DetailPostQueryDto>()
+        val response = mock<DetailPostQueryResponse>()
+
+        //when
+        whenever(postQueryService.findPostByIdx(postIdx)).thenReturn(dto)
+        whenever(postQueryConverter.toQueryResponse(dto)).thenReturn(response)
+
+        //then
+        val result = target.findPostByIdx(postIdx)
+        assert(result.statusCode.is2xxSuccessful)
+        assert(result.hasBody())
+        assertEquals(result.body, response)
     }
 }
