@@ -28,6 +28,10 @@ class PostQueryController(
             .let { postQueryConverter.toPageableResponse(it.toList()) }
             .let { ResponseEntity.ok().body(it) }
     @GetMapping("/{post_idx}")
-    fun findPostByIdx(@PathVariable post_idx: Long): ResponseEntity<DetailPostQueryResponse>{}
+    fun findPostByIdx(@PathVariable("post_idx") postIdx: Long): ResponseEntity<DetailPostQueryResponse>{
+        postQueryService.findPostByIdx(postIdx)
+            .let { postQueryConverter.toQueryResponse(it) }
+            .let { ResponseEntity.ok().body(it) }
+    }
 
 }
