@@ -1,5 +1,6 @@
 package com.iwfsg.board.domain.post.utils.impl
 
+import com.iwfsg.board.domain.comment.entity.Comment
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.presentaion.data.dto.DetailPostQueryDto
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
@@ -19,6 +20,17 @@ class PostQueryConverterImpl: PostQueryConverter {
         thumbnail = entity.thumbnail,
         views = views,likeCount
     )
+
+    override fun toDetailQueryDto(
+        dto: PostQueryDto,
+        liked: Boolean,
+        mined: Boolean,
+        comment: List<Comment>,
+        category: List<String>,
+        userName: String,
+    ): DetailPostQueryDto {
+        TODO("Not yet implemented")
+    }
 
     override fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse = PostQueryResponse(
         idx = dto.idx,
