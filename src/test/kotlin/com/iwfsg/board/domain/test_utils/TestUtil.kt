@@ -6,6 +6,7 @@ object TestUtil {
 
     object TestDataUtil {
         fun post() = PostDataUtil
+        fun comment() = CommentDataUtil
         fun user() = UserDataUtil
     }
     object TestConverter {

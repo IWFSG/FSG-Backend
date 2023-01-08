@@ -8,4 +8,8 @@ class Views (
     @Id
     var postId: Long,
     var viewCount: Long
-)
+) {
+    fun increaseViewCount() {
+        viewCount +=1
+    }
+}

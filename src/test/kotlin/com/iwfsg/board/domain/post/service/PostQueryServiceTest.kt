@@ -1,12 +1,20 @@
 package com.iwfsg.board.domain.post.service
 
+import com.iwfsg.board.domain.comment.repository.CommentRepository
 import com.iwfsg.board.domain.like.repository.LikeRepository
+import com.iwfsg.board.domain.post.entity.Post
+import com.iwfsg.board.domain.post.presentaion.data.dto.DetailPostQueryDto
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
+import com.iwfsg.board.domain.post.repository.CategoryRepository
 import com.iwfsg.board.domain.post.repository.PostRepository
 import com.iwfsg.board.domain.post.repository.PostViewsRepository
 import com.iwfsg.board.domain.post.service.impl.PostQueryServiceImpl
 import com.iwfsg.board.domain.post.utils.PostQueryConverter
 import com.iwfsg.board.domain.test_utils.TestUtil
+import com.iwfsg.board.domain.user.entity.User
+import com.iwfsg.board.domain.user.repository.UserRepository
+import com.iwfsg.board.domain.user.utils.UserUtils
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -25,7 +33,10 @@ class PostQueryServiceTest {
     private lateinit var postRepository: PostRepository
     private lateinit var postViewsRepository: PostViewsRepository
     private lateinit var likeRepository: LikeRepository
+    private lateinit var commentRepository: CommentRepository
     private lateinit var postQueryConverter: PostQueryConverter
+    private lateinit var categoryRepository: CategoryRepository
+    private lateinit var userUtils: UserUtils
     private lateinit var target: PostQueryService
 
     @BeforeEach
@@ -33,8 +44,11 @@ class PostQueryServiceTest {
         postRepository = mock()
         postViewsRepository = mock()
         postQueryConverter = mock()
+        userUtils = mock()
+        categoryRepository = mock()
         likeRepository = mock()
-        target = PostQueryServiceImpl(postRepository, postViewsRepository, likeRepository, postQueryConverter)
+        commentRepository = mock()
+        target = PostQueryServiceImpl(postRepository, postViewsRepository, userUtils, likeRepository, categoryRepository, commentRepository, postQueryConverter)
     }
     @ParameterizedTest
     @CsvSource(value = ["idx,DESC", "idx,ASC", "createdAt,DESC", "createdAt, ASC"])
@@ -57,5 +71,32 @@ class PostQueryServiceTest {
         //then
         val result = target.findAllPost(pagination)
         assert(result.content.stream().allMatch{ it==queryDto})
+    }
+    @Test
+    fun test_findPostByIdx(){
+        //given
+        val idx = Random.nextLong().absoluteValue
+        val post = mock<Post>()
+        val user = mock<User>()
+        val content = (1..10).map {TestUtil.data().comment().entity()}
+        val category = emptyList<String>()
+        val likeCount = Random.nextLong().absoluteValue
+        val queryDto = mock<PostQueryDto>()
+        val returnDto = mock<DetailPostQueryDto>()
+
+        //when
+        whenever(userUtils.getCurrentUser()).thenReturn(user)
+        whenever(postRepository.findById(idx)).thenReturn(Optional.empty())
+        whenever(likeRepository.existsByUser(user)).thenReturn(false)
+        whenever(categoryRepository.findCategoriesByPost(post).map { it.title }).thenReturn(category)
+        whenever(postViewsRepository.findById(idx)).thenReturn(Optional.empty())
+        whenever(commentRepository.findByIdx(idx)).thenReturn(content)
+        whenever(likeRepository.countByPost(any())).thenReturn(likeCount)
+        whenever(postQueryConverter.toQueryDto(any(), any(), any())).thenReturn(queryDto)
+        whenever(postQueryConverter.toDetailQueryDto(any(), any(), any(), any(), any(), any())).thenReturn(returnDto)
+
+        //then
+         val result = target.findPostByIdx(idx)
+        assertEquals(result, returnDto)
     }
 }
