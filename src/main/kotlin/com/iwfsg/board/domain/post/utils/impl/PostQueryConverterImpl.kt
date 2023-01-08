@@ -18,19 +18,31 @@ class PostQueryConverterImpl: PostQueryConverter {
         title = entity.title,
         content = entity.content,
         thumbnail = entity.thumbnail,
-        views = views,likeCount
+        views = views,likeCount,
+        createdAt = entity.createdAt!!
     )
 
     override fun toDetailQueryDto(
         dto: PostQueryDto,
         liked: Boolean,
         mined: Boolean,
-        comment: List<Comment>,
+        comments: List<DetailPostQueryDto.Comment>,
         category: List<String>,
         userName: String,
-    ): DetailPostQueryDto {
-        TODO("Not yet implemented")
-    }
+    ): DetailPostQueryDto = DetailPostQueryDto(
+        idx = dto.idx,
+        authorName = userName,
+        title = dto.title,
+        content = dto.content,
+        thumbnail = dto.thumbnail,
+        category = category,
+        views = dto.views,
+        likeCount = dto.likeCount,
+        isLiked = liked,
+        isMine = mined,
+        createdAt = dto.createdAt,
+        CommentList = comments
+    )
 
     override fun toSummaryQueryResponse(dto: PostQueryDto): PostQueryResponse = PostQueryResponse(
         idx = dto.idx,

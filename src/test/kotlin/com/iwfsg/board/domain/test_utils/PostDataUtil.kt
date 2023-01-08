@@ -2,6 +2,7 @@ package com.iwfsg.board.domain.test_utils
 
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
+import java.time.ZonedDateTime
 import kotlin.random.Random
 
 object PostDataUtil {
@@ -15,7 +16,8 @@ object PostDataUtil {
         content = content(),
         thumbnail = thumbnail(),
         views = Random.nextLong(),
-        likeCount = Random.nextLong()
+        likeCount = Random.nextLong(),
+        createdAt = ZonedDateTime.now()
     )
     fun entity() = Post(
         title = title(),

@@ -1,5 +1,6 @@
 package com.iwfsg.board.domain.post.presentaion.data.response
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.ZonedDateTime
 
 data class DetailPostQueryResponse (
@@ -13,6 +14,7 @@ data class DetailPostQueryResponse (
     val likeCount: Long,
     val isLiked: Boolean,
     val isMine: Boolean,
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     val createdAt: ZonedDateTime,
     val commentList: List<Comment>
 ){
