@@ -1,7 +1,7 @@
 package com.iwfsg.board.domain.post.service.impl
 
-import com.iwfsg.board.domain.comment.entity.Comment
 import com.iwfsg.board.domain.comment.repository.CommentRepository
+import com.iwfsg.board.domain.comment.util.CommentValidator
 import com.iwfsg.board.domain.like.repository.LikeRepository
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.entity.Views
@@ -18,69 +18,50 @@ import com.iwfsg.board.domain.user.utils.UserUtils
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
 class PostQueryServiceImpl(
     private val postRepository: PostRepository,
     private val postViewsRepository: PostViewsRepository,
+    private val postValidator: CommentValidator,
     private val userUtils: UserUtils,
     private val likeRepository: LikeRepository,
     private val categoryRepository: CategoryRepository,
     private val commentRepository: CommentRepository,
     private val postQueryConverter: PostQueryConverter
 ): PostQueryService {
+    @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun findAllPost(pagination: PageRequest): Page<PostQueryDto> {
         val posts = postRepository.findBy(pagination)
         return posts.map {
             val likeCount = getLikeCount(it)
             val views = findPostViewsByPostIdx(it.idx)
-            return@map postQueryConverter.toQueryDto(views,it,likeCount)
+            return@map postQueryConverter.toQueryDto(views.viewCount, it,likeCount)
         }
     }
-
+    @Transactional(rollbackFor = [Exception::class])
     override fun findPostByIdx(idx: Long): DetailPostQueryDto {
         val user = userUtils.getCurrentUser()
         val post = postRepository.findPostByIdx(idx).orElseThrow{PostNotFoundException()}
         val isMine = verifyPostOwner(post, user)
         val isLiked = likeRepository.existsByUser(user)
-        val commentList = commentRepository.findByIdx(idx)
+        val comment = commentRepository.findByIdx(idx).map { postValidator.verifyCommentOwner(it,user) }
         val category = categoryRepository.findCategoriesByPost(post).map { it.title }
         val views = findPostViewsByPostIdx(idx)
         val likeCount = getLikeCount(post)
 
-        increaseViews(idx)
+        views.increaseViewCount()
+        postViewsRepository.save(views)
 
-        return postQueryConverter.toQueryDto(views, post, likeCount)
-            .let { postQueryConverter.toDetailQueryDto(it,isLiked,isMine,commentList.map { comment -> verifyComment(comment,user) },category,user.name)}
+        return postQueryConverter.toQueryDto(views.viewCount, post, likeCount)
+            .let { postQueryConverter.toDetailQueryDto(it,isLiked, isMine, comment, category, user.name)}
     }
-
-    private fun findPostViewsByPostIdx(idx: Long): Long =
-        postViewsRepository.findById(idx)
-            .let { if(it.isEmpty) 0 else it.get().viewCount }
+    private fun findPostViewsByPostIdx(idx: Long): Views =
+        postViewsRepository.findById(idx).orElse(Views(idx, 0))
     private fun getLikeCount(post: Post): Long =
         likeRepository.countByPost(post)
     private fun verifyPostOwner(post: Post, user: User): Boolean =
-        Objects.equals(post.user.idx,user.idx)
-    private fun verifyComment(comment: Comment,user: User): DetailPostQueryDto.Comment =
-        if(comment.user.idx == user.idx){
-            DetailPostQueryDto.Comment(
-                idx = comment.idx,
-                name = user.name,
-                content = comment.content,
-                isMine = true
-            )
-        }else{
-            DetailPostQueryDto.Comment(
-                idx = comment.idx,
-                name = user.name,
-                content = comment.content,
-                isMine = true
-            )
-        }
-    private fun increaseViews(postIdx: Long){
-        val views = postViewsRepository.findById(postIdx).orElse(Views(postIdx, 0))
-        views.increaseViewCount()
-        postViewsRepository.save(views)
-    }
+        Objects.equals(post.user.idx, user.idx)
 }

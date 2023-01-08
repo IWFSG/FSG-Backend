@@ -1,6 +1,7 @@
 package com.iwfsg.board.domain.post.service
 
 import com.iwfsg.board.domain.comment.repository.CommentRepository
+import com.iwfsg.board.domain.comment.util.CommentValidator
 import com.iwfsg.board.domain.like.repository.LikeRepository
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.presentaion.data.dto.DetailPostQueryDto
@@ -33,6 +34,7 @@ class PostQueryServiceTest {
     private lateinit var postRepository: PostRepository
     private lateinit var postViewsRepository: PostViewsRepository
     private lateinit var likeRepository: LikeRepository
+    private lateinit var commentValidator: CommentValidator
     private lateinit var commentRepository: CommentRepository
     private lateinit var postQueryConverter: PostQueryConverter
     private lateinit var categoryRepository: CategoryRepository
@@ -45,10 +47,11 @@ class PostQueryServiceTest {
         postViewsRepository = mock()
         postQueryConverter = mock()
         userUtils = mock()
+        commentValidator = mock()
         categoryRepository = mock()
         likeRepository = mock()
         commentRepository = mock()
-        target = PostQueryServiceImpl(postRepository, postViewsRepository, userUtils, likeRepository, categoryRepository, commentRepository, postQueryConverter)
+        target = PostQueryServiceImpl(postRepository, postViewsRepository, commentValidator, userUtils, likeRepository, categoryRepository, commentRepository, postQueryConverter)
     }
     @ParameterizedTest
     @CsvSource(value = ["idx,DESC", "idx,ASC", "createdAt,DESC", "createdAt, ASC"])
