@@ -1,6 +1,5 @@
 package com.iwfsg.board.domain.post.utils.impl
 
-import com.iwfsg.board.domain.comment.entity.Comment
 import com.iwfsg.board.domain.post.entity.Post
 import com.iwfsg.board.domain.post.presentaion.data.dto.DetailPostQueryDto
 import com.iwfsg.board.domain.post.presentaion.data.dto.PostQueryDto
