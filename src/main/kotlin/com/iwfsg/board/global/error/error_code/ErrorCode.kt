@@ -6,7 +6,7 @@ enum class ErrorCode(val message: String, val status: Int) {
     USER_NOT_FOUND("UserIsNotFound",404),
     POST_NOT_FOUND("PostIsNotFound",404),
     INVALID_TOKEN( "Invalid Token",401),
-
+    USER_ALREADY_EXIST("User Already Exist",409),
 
 
 }
