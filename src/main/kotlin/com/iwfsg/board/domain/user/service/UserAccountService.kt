@@ -1,5 +1,8 @@
 package com.iwfsg.board.domain.user.service
 
+import com.iwfsg.board.domain.user.presentation.data.presentation.dto.RegisterDto
+
 interface UserAccountService {
-    fun signup()
+    fun register(dto: RegisterDto)
+
 }
