@@ -20,7 +20,6 @@ dependencies {
 
     //jwt
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    implementation("org.projectlombok:lombok:1.18.24")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
@@ -32,18 +31,19 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("com.mysql:mysql-connector-j")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
     annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor")
 
     // JUnit5
     testImplementation("org.junit.platform:junit-platform-launcher:1.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    //test
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation ("org.mockito:mockito-inline:4.10.0")
 
     //security
     implementation ("org.springframework.boot:spring-boot-starter-security")
     implementation ("org.springframework.security:spring-security-test")
-    implementation ("org.springframework.boot:spring-boot-starter-security")
 
 }
 

@@ -6,6 +6,10 @@ import org.springframework.data.redis.core.RedisHash
 @RedisHash
 class Views (
     @Id
-    val postId: Long,
-    var vieWCount: Long
-)
+    var postId: Long,
+    var viewCount: Long
+) {
+    fun increaseViewCount() {
+        viewCount +=1
+    }
+}
