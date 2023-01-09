@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class CategoryConverterImpl: CategoryConverter {
-    override fun toEntity(categoryName: String, post: Post): Category {
-        TODO("Not yet implemented")
-    }
+    override fun toEntity(categoryName: String, post: Post): Category = Category(
+        title = categoryName,
+        post = post
+    )
 }

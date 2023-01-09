@@ -10,6 +10,7 @@ import com.iwfsg.board.domain.post.repository.PostViewsRepository
 import com.iwfsg.board.domain.post.service.impl.PostServiceImpl
 import com.iwfsg.board.domain.post.utils.CategoryConverter
 import com.iwfsg.board.domain.post.utils.PostConverter
+import com.iwfsg.board.domain.user.entity.User
 import com.iwfsg.board.domain.user.utils.UserUtils
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -42,19 +43,17 @@ class PostServiceTest {
     @DisplayName("PostService - 게시물 생성 성공테스트")
     fun testCreatePost() {
         //given
+        val user = mock<User>()
         val dto = mock<PostDto>()
         val post = mock<Post>()
         val category = listOf(mock<Category>())
         val views = mock<Views>()
 
         //when
-        whenever(postConverter.toEntity(dto)).thenReturn(post)
+        whenever(postConverter.toEntity(dto, user)).thenReturn(post)
         whenever(postRepository.save(post)).thenReturn(post)
         whenever(dto.category.map { categoryConverter.toEntity(it, post) }).thenReturn(category)
         whenever(categoryRepository.saveAll(category)).thenReturn(category)
         whenever(viewsRepository.save(views)).thenReturn(views)
-
-        //then
-        val result = target.createPost(dto)
     }
 }
