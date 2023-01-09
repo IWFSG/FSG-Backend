@@ -5,7 +5,6 @@ import com.iwfsg.board.domain.post.presentaion.data.dto.PostDto
 import com.iwfsg.board.domain.post.presentaion.data.request.CreatePostRequest
 import com.iwfsg.board.domain.post.service.PostService
 import com.iwfsg.board.domain.post.utils.PostConverter
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -33,10 +32,9 @@ class PostControllerTest {
 
         //when
         whenever(postConverter.toDto(request)).thenReturn(dto)
-        whenever(postService.createPost(dto)).thenReturn(null)
 
+        //then
         val result = target.createPost(request)
         assert(result.statusCode.is2xxSuccessful)
-        assertNull(result.body)
     }
 }

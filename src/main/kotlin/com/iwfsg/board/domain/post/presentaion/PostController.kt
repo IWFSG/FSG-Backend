@@ -3,6 +3,7 @@ package com.iwfsg.board.domain.post.presentaion
 import com.iwfsg.board.domain.post.presentaion.data.request.CreatePostRequest
 import com.iwfsg.board.domain.post.service.PostService
 import com.iwfsg.board.domain.post.utils.PostConverter
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -17,7 +18,8 @@ class PostController(
     private val postService: PostService
 ) {
     @PostMapping
-    fun createPost(@Valid @RequestBody createPostRequest: CreatePostRequest): ResponseEntity<Void>{
-
-    }
+    fun createPost(@Valid @RequestBody createPostRequest: CreatePostRequest): ResponseEntity<Void> =
+        postConverter.toDto(createPostRequest)
+            .let { postService.createPost(it) }
+            .let { ResponseEntity.status(HttpStatus.CREATED).build() }
 }
