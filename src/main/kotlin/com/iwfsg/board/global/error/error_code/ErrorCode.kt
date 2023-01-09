@@ -5,7 +5,7 @@ enum class ErrorCode(val message: String, val status: Int) {
     EXPIRED_TOKEN("ExpiredToken", 401),
     USER_NOT_FOUND("UserIsNotFound",404),
     INVALID_TOKEN( "Invalid Token",401),
-
+    USER_ALREADY_EXIST("User Already Exist",409),
 
 
 }
