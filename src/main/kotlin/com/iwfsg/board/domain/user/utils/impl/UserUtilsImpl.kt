@@ -14,5 +14,6 @@ class UserUtilsImpl(
     override fun findUserById(id: String): User = userRepository.findUserById(id)?:throw UserNotFoundException()
     override fun getCurrentUser(): User {
         val userId: String = SecurityContextHolder.getContext().authentication.name
-        return userRepository.findUserById(userId)?:throw UserNotFoundException()
+        return userRepository.findUserById(userId) ?: throw UserNotFoundException()
+    }
 }

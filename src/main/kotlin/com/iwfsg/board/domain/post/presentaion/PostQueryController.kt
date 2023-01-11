@@ -15,7 +15,7 @@ class PostQueryController(
     private val postQueryConverter: PostQueryConverter,
     private val postQueryService: PostQueryService
 ){
-    @GetMapping
+    @GetMapping("/list")
     fun findAllPostWithPagination(
         @RequestParam("page", defaultValue = "0") page: Int,
         @RequestParam("size", defaultValue = "5") size: Int,
